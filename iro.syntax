@@ -1,0 +1,81 @@
+name               = Qua
+file_extensions [] = qua;
+styles [] {
+   .comment : style {
+      color = grey
+      textmate_scope  = comment.line
+      pygments_scope  = Comment
+   }
+   .tree     : style color = "orange";
+   .main     : style color = "light_green";
+   .function : style color = "light_blue";
+   .string  : style {
+    color = red
+    textmate_scope = constant.character.escape
+   }
+   .define   : style color = "orange";
+   .quotes   : style color = "white";
+   .quoted_text : style {
+       color = cyan
+   }
+}
+
+contexts[] {
+   main : context {
+      : pattern {
+         regex    \= (if | while | forever | loop)
+         styles [] = .main;
+      }
+      : pattern {
+         regex \= (//.*)
+         styles[] = .comment;
+      }
+      : pattern {
+         regex \= (\bdefine\b | \bassign\b | \bpublic\b)
+         styles[] = .define;
+      }
+      : pattern {
+         regex \= (\bvalue\b | \bset\b | \bequals\b)
+         styles[] = .define;
+      }
+      : pattern {
+         regex    \= (\bmain\b | \bend\b)
+         styles [] = .main;
+      }
+      : pattern {
+         regex    \= (\bmain\b)
+         styles [] = .main;
+      }
+      : pattern {
+         regex    \= (\bend\b)
+         styles [] = .main;
+      }
+      : pattern {
+         regex    \= (\bfunction\b | \bstatic\b)
+         styles [] = .function;
+      }
+      : pattern {
+         regex \= (\blog\b | \bprint\b)
+         styles [] = .tree;
+      }
+      : inline_push {
+         regex \= (\()
+         styles[] = .quotes;
+         default_style = .quoted_text
+         : pop {
+            regex   \= (\))
+            styles[] = .quotes;
+         }
+      }
+      : inline_push {
+         regex \= (")
+         styles[] = .quotes;
+         default_style = .string
+         : pop {
+            regex   \= (")
+            styles[] = .quotes;
+         }
+      }
+   }
+}
+

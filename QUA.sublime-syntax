@@ -1,10 +1,60 @@
 %YAML 1.2
 ---
 name: Qua
-file_extensions: [qua, q]
-scope: source.c
+scope: source.Qua
+file_extensions: [ qua ]
 
 contexts:
   main:
-    - match: \b(if|else|for|while)\b
-      scope: keyword.control.c
+    - match: '(if | while | forever | loop)'
+      captures:
+        0: text.Qua
+    - match: '(//.*)'
+      captures:
+        0: comment.line.Qua
+    - match: '(\bdefine\b | \bassign\b | \bpublic\b)'
+      captures:
+        0: text.Qua
+    - match: '(\bvalue\b | \bset\b | \bequals\b)'
+      captures:
+        0: text.Qua
+    - match: '(\bmain\b | \bend\b)'
+      captures:
+        0: text.Qua
+    - match: '(\bmain\b)'
+      captures:
+        0: text.Qua
+    - match: '(\bend\b)'
+      captures:
+        0: text.Qua
+    - match: '(\bfunction\b | \bstatic\b)'
+      captures:
+        0: text.Qua
+    - match: '(\blog\b | \bprint\b)'
+      captures:
+        0: text.Qua
+    - match: '(\()'
+      captures:
+        0: text.Qua
+      push: 
+        - match: '(\))'
+          pop: true
+          captures:
+            0: text.Qua
+        - match: '(.)'
+          captures:
+            0: text.Qua
+    - match: '(")'
+      captures:
+        0: text.Qua
+      push: 
+        - match: '(")'
+          pop: true
+          captures:
+            0: text.Qua
+        - match: '(.)'
+          captures:
+            0: constant.character.escape.Qua
+    - match: '(.)'
+      captures:
+        0: text.Qua
