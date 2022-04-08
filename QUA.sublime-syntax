@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
-name: C
-file_extensions: [c, h]
+name: Qua
+file_extensions: [qua, q]
 scope: source.c
 
 contexts:
